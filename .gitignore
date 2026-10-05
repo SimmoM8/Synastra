@@ -1,0 +1,10 @@
+# Operating system
+.DS_Store
+
+# Local environment
+.env
+.env.*
+!.env.example
+
+# Simmos Studio workspace
+/.simmos_studio/

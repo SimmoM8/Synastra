@@ -1,26 +1,12 @@
+import { useState } from 'react'
 import UserNode from './components/UserNode'
 import SearchInput from './components/SearchInput'
-import { useEffect, useState } from 'react'
+import useUsers from './hooks/useUsers'
 
 function App() {
-  const [searchTerm, setSearchTerm] = useState('');
-  const [users, setUsers] = useState([]);
-  const [loading, setLoading] = useState(true);
-  useEffect(() => {
-    fetch(
-      'https://api-userapi.onrender.com/api/users/getUsers',
-      {
-        headers: {
-            'x-api-key': 'elev-hemlighet-2026'
-        }
-      }
-    )
-      .then(response => response.json())
-      .then(data => {
-        setUsers(data);
-        setLoading(false);
-      });
-  }, []);
+  const [searchTerm, setSearchTerm] = useState('')
+  const { users, loading } = useUsers()
+
   return (
     <>
       <h1>Synastra</h1>
@@ -29,21 +15,23 @@ function App() {
       <SearchInput
         placeholder="Search the constellation..."
         value={searchTerm}
-        onChange={e => setSearchTerm(e.target.value)} />
-      
+        onChange={e => setSearchTerm(e.target.value)}
+      />
+
       {loading ? (
-        <p>Loading...</p>
+        <p>Mapping constellation...</p>
       ) : (
-          <ul>
-            {users.map(user =>
-              <li>
-                <UserNode
-                  name={user.profile.name}
-                  username={user.username}
-                  city={user.profile.address.city} />
-              </li>
-            )}
-          </ul>
+        <ul>
+          {users.map(user => (
+            <li key={user.id}>
+              <UserNode
+                name={user.profile.name}
+                username={user.username}
+                city={user.profile.address.city}
+              />
+            </li>
+          ))}
+        </ul>
       )}
     </>
   )

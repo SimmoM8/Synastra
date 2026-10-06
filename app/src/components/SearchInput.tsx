@@ -1,9 +1,6 @@
-import { useState } from 'react';
-
-function SearchInput(props: { placeholder: string }) {
-    const [input, setInput] = useState('');
+function SearchInput(props: { placeholder: string, value: string, onChange: (e: React.ChangeEvent<HTMLInputElement>) => void }) {
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setInput(e.target.value);
+    props.onChange(e);
     console.log(`Search input changed: ${e.target.value}`);
   }
 
@@ -11,7 +8,7 @@ function SearchInput(props: { placeholder: string }) {
       <input
           type="text"
           placeholder={props.placeholder}
-          value={input}
+          value={props.value}
           onChange={handleChange} />
   )
 }

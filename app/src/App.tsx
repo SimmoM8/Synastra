@@ -7,6 +7,16 @@ function App() {
   const [searchTerm, setSearchTerm] = useState('')
   const { users, loading } = useUsers()
 
+  const filteredUsers = users.filter(user => {
+    const search = searchTerm.toLowerCase()
+
+    return (
+      user.profile.name.toLowerCase().includes(search) ||
+      user.username.toLowerCase().includes(search) ||
+      user.profile.address.city.toLowerCase().includes(search)
+    )
+  })
+
   return (
     <>
       <h1>Synastra</h1>
@@ -22,7 +32,7 @@ function App() {
         <p>Mapping constellation...</p>
       ) : (
         <ul>
-          {users.map(user => (
+          {filteredUsers.map(user => (
             <li key={user.id}>
               <UserNode
                 name={user.profile.name}

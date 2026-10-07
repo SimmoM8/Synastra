@@ -31,10 +31,23 @@ function UsersPage() {
     return <p>Signal lost: {error.message}</p>
   }
 
-  return (
-    <>
-      <h1>Synastra</h1>
-      <p>Users as light nodes in a connected network</p>
+return (
+  <main className="min-h-screen bg-slate-950 text-slate-100">
+    <div className="mx-auto max-w-6xl px-6 py-16">
+
+      <header className="mb-12">
+        <p className="mb-2 text-sm uppercase tracking-[0.35em] text-violet-400">
+          The Constellation
+        </p>
+
+        <h1 className="text-5xl font-light tracking-tight">
+          Synastra
+        </h1>
+
+        <p className="mt-4 max-w-xl text-slate-400">
+          People become points of light in a connected network.
+        </p>
+      </header>
 
       <SearchInput
         placeholder="Search the constellation..."
@@ -43,11 +56,11 @@ function UsersPage() {
       />
 
       {users.length === 0 ? (
-        <p>No users detected.</p>
+        <p>No lights detected.</p>
       ) : filteredUsers.length === 0 ? (
-        <p>No matching users found.</p>
+        <p>No matching lights found.</p>
       ) : (
-        <ul>
+        <ul className="mt-10 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
           {filteredUsers.map(user => (
             <li key={user.id}>
               <UserNode
@@ -60,8 +73,10 @@ function UsersPage() {
           ))}
         </ul>
       )}
-    </>
-  )
+
+    </div>
+  </main>
+)
 }
 
 export default UsersPage

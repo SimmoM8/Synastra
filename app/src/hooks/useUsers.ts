@@ -5,6 +5,7 @@ function useUsers() {
   return useQuery({
     queryKey: ["users"],
     queryFn: fetchUsers,
+    staleTime: 1000 * 60 * 10,
   });
 }
 

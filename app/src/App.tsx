@@ -1,57 +1,13 @@
-import { useState } from 'react'
-import UserNode from './components/UserNode'
-import SearchInput from './components/SearchInput'
-import useUsers from './hooks/useUsers'
+import { Routes, Route } from 'react-router-dom'
+import UsersPage from './pages/UsersPage'
+import UserDetailsPage from './pages/UserDetailsPage'
 
 function App() {
-  const [searchTerm, setSearchTerm] = useState('')
-  const {
-  data: users = [],
-  isLoading,
-  isError,
-  error
-} = useUsers()
-
-  const filteredUsers = users.filter(user => {
-    const search = searchTerm.toLowerCase()
-
-    return (
-      user.profile.name.toLowerCase().includes(search) ||
-      user.username.toLowerCase().includes(search) ||
-      user.profile.address.city.toLowerCase().includes(search)
-    )
-  })
-  if (isError) {
-    return <p>Signal lost: {error.message}</p>
-  }
-  
   return (
-    <>
-      <h1>Synastra</h1>
-      <p>Users as light nodes in a connected network</p>
-
-      <SearchInput
-        placeholder="Search the constellation..."
-        value={searchTerm}
-        onChange={e => setSearchTerm(e.target.value)}
-      />
-
-      {isLoading ? (
-        <p>Mapping constellation...</p>
-      ) : (
-        <ul>
-          {filteredUsers.map(user => (
-            <li key={user.id}>
-              <UserNode
-                name={user.profile.name}
-                username={user.username}
-                city={user.profile.address.city}
-              />
-            </li>
-          ))}
-        </ul>
-      )}
-    </>
+    <Routes>
+      <Route path="/" element={<UsersPage />} />
+      <Route path="/users/:id" element={<UserDetailsPage />} />
+    </Routes>
   )
 }
 

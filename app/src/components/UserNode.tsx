@@ -1,32 +1,33 @@
-import { useState } from 'react';
+import { useState } from 'react'
+import { Link } from 'react-router-dom'
 
+interface UserNodeProps {
+  id: number
+  name: string
+  username: string
+  city: string
+}
 
-function UserNode(props: { name: string; username: string; city: string }) {
+function UserNode(props: UserNodeProps) {
+  const [hovering, setHovering] = useState(false)
 
-    const [hovering, setHovering] = useState(false);
-    const [selected, setSelected] = useState(false);
+  const onHover = () => {
+    setHovering(true)
+  }
 
-    const handleClick = () => {
-        setSelected(!selected);
-        console.log(`Selected Node: ${props.name}`);
-    }
+  const onLeave = () => {
+    setHovering(false)
+  }
 
-    const onHover = () => {
-        setHovering(true);
-    }
-    
-    const onLeave = () => {
-        setHovering(false);
-    }
-    
   return (
-    <div onClick={handleClick} onMouseEnter={onHover} onMouseLeave={onLeave}>
-          <p>{hovering ? '*' : ''} {props.name}</p>
-          {selected ?
-          <>
-            <p>@{props.username}</p>
-            <p>{props.city}</p>
-          </> : null}
+    <div onMouseEnter={onHover} onMouseLeave={onLeave}>
+      <p>{hovering ? '*' : ''} {props.name}</p>
+      <p>@{props.username}</p>
+      <p>{props.city}</p>
+
+      <Link to={`/users/${props.id}`}>
+        View node
+      </Link>
     </div>
   )
 }

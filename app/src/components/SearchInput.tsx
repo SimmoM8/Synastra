@@ -1,15 +1,21 @@
-function SearchInput(props: { placeholder: string, value: string, onChange: (e: React.ChangeEvent<HTMLInputElement>) => void }) {
+interface SearchInputProps {
+  placeholder: string
+  value: string
+  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void
+}
+
+function SearchInput(props: SearchInputProps) {
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    props.onChange(e);
-    console.log(`Search input changed: ${e.target.value}`);
+    props.onChange(e)
   }
 
   return (
-      <input
-          type="text"
-          placeholder={props.placeholder}
-          value={props.value}
-          onChange={handleChange} />
+    <input
+      type="text"
+      placeholder={props.placeholder}
+      value={props.value}
+      onChange={handleChange}
+    />
   )
 }
 

@@ -23,6 +23,10 @@ function UsersPage() {
     )
   })
 
+  if (isLoading) {
+    return <p>Mapping constellation...</p>
+  }
+
   if (isError) {
     return <p>Signal lost: {error.message}</p>
   }
@@ -38,8 +42,10 @@ function UsersPage() {
         onChange={e => setSearchTerm(e.target.value)}
       />
 
-      {isLoading ? (
-        <p>Mapping constellation...</p>
+      {users.length === 0 ? (
+        <p>No users detected.</p>
+      ) : filteredUsers.length === 0 ? (
+        <p>No matching users found.</p>
       ) : (
         <ul>
           {filteredUsers.map(user => (

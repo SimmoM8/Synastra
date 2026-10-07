@@ -5,7 +5,12 @@ import useUsers from './hooks/useUsers'
 
 function App() {
   const [searchTerm, setSearchTerm] = useState('')
-  const { users, loading } = useUsers()
+  const {
+  data: users = [],
+  isLoading,
+  isError,
+  error
+} = useUsers()
 
   const filteredUsers = users.filter(user => {
     const search = searchTerm.toLowerCase()
@@ -16,7 +21,10 @@ function App() {
       user.profile.address.city.toLowerCase().includes(search)
     )
   })
-
+  if (isError) {
+    return <p>Signal lost: {error.message}</p>
+  }
+  
   return (
     <>
       <h1>Synastra</h1>
@@ -28,7 +36,7 @@ function App() {
         onChange={e => setSearchTerm(e.target.value)}
       />
 
-      {loading ? (
+      {isLoading ? (
         <p>Mapping constellation...</p>
       ) : (
         <ul>
